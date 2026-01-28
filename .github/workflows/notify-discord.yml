@@ -1,16 +1,22 @@
-name: Notify Discord
+name: GitHub → Discord notifications
 
 on:
   issues:
-    types: [opened, closed, reopened]
+    types: [opened]
   pull_request:
-    types: [opened, closed, reopened]
+    types: [opened]
+
+permissions:
+  contents: read
 
 jobs:
-  notify:
+  notify-discord:
     uses: oxxymore-interactive/.github/.github/workflows/discord-notify.yml@main
-    secrets: inherit
     with:
-      event_name: ${{ github.event_name }}
-      repository: ${{ github.repository }}
+      title: ${{ github.event.issue.title || github.event.pull_request.title }}
+      url: ${{ github.event.issue.html_url || github.event.pull_request.html_url }}
+      repo: ${{ github.repository }}
       actor: ${{ github.actor }}
+      event: ${{ github.event_name }}
+    secrets:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_GITHUB_ACTIVITY }}
