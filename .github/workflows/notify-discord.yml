@@ -9,6 +9,7 @@ on:
 jobs:
   notify:
     uses: oxxymore-interactive/.github/.github/workflows/discord-notify.yml@main
+    secrets: inherit
     with:
       event_name: ${{ github.event_name }}
       repository: ${{ github.repository }}
