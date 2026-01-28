@@ -1,4 +1,4 @@
-name: Notify Discord (GitHub Activity)
+name: GitHub → Discord notifications
 
 on:
   issues:
@@ -14,56 +14,13 @@ jobs:
 
     steps:
       - name: Send notification to Discord
+        uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_GITHUB_ACTIVITY }}
-          EVENT_NAME: ${{ github.event_name }}
-          REPO: ${{ github.repository }}
-          ACTOR: ${{ github.actor }}
-          REF: ${{ github.ref }}
-
-          ISSUE_TITLE: ${{ github.event.issue.title }}
-          ISSUE_URL: ${{ github.event.issue.html_url }}
-
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-
-          COMMIT_MSG: ${{ github.event.head_commit.message }}
-        run: |
-          set -euo pipefail
-
-          if [ -z "${DISCORD_WEBHOOK:-}" ]; then
-            echo "Missing secret: DISCORD_WEBHOOK_GITHUB_ACTIVITY" >&2
-            exit 1
-          fi
-
-          if [ "$EVENT_NAME" = "issues" ]; then
-            CONTENT="Issue opened: ${ISSUE_TITLE} — ${ISSUE_URL} (repo: ${REPO}, by: ${ACTOR})"
-          elif [ "$EVENT_NAME" = "pull_request" ]; then
-            CONTENT="PR opened: ${PR_TITLE} — ${PR_URL} (repo: ${REPO}, by: ${ACTOR})"
-          elif [ "$EVENT_NAME" = "push" ]; then
-            BRANCH="${REF#refs/heads/}"
-            CONTENT="Push to ${BRANCH} in ${REPO} by ${ACTOR}: ${COMMIT_MSG}"
-          else
-            CONTENT="Event ${EVENT_NAME} in ${REPO} by ${ACTOR}"
-          fi
-
-          export CONTENT
-
-          python - <<'PY'
-import json, os, urllib.request
-
-webhook = os.environ["DISCORD_WEBHOOK"]
-content = os.environ["CONTENT"]
-
-payload = json.dumps({"content": content}).encode("utf-8")
-
-req = urllib.request.Request(
-    webhook,
-    data=payload,
-    headers={"Content-Type": "application/json"},
-    method="POST",
-)
-
-with urllib.request.urlopen(req) as resp:
-    print("Discord response:", resp.status)
-PY
+          DISCORD_USERNAME: "OXXYMORE • GitHub"
+          DISCORD_AVATAR: "https://avatars.githubusercontent.com/u/9919?s=200&v=4"
+          DISCORD_MESSAGE: |
+            **Repository:** ${{ github.repository }}
+            **Event:** ${{ github.event_name }}
+            **Actor:** ${{ github.actor }}
+            **Link:** https://github.com/${{ github.repository }}
