@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>OXXYMORE INTERACTIVE — Schéma canonique (écran contenu)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root{
+      --bg0:#f7f8fb;
+      --bg1:#ffffff;
+      --ink:#0c1222;
+      --muted:#54607a;
+
+      --stroke:rgba(12,18,34,.12);
+      --shadow: 0 18px 55px rgba(12,18,34,.10);
+
+      --c-notion:#6e56cf;
+      --c-hack:#ff7a00;
+      --c-unity:#111827;
+      --c-github:#0b1224;
+      --c-discord:#5865f2;
+      --c-decision:#10b981;
+
+      --r:22px;
+      --r2:28px;
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--ink);
+      background:
+        radial-gradient(1100px 680px at 18% -10%, rgba(110,86,207,.18), transparent 60%),
+        radial-gradient(980px 680px at 82% 0%, rgba(88,101,242,.18), transparent 60%),
+        radial-gradient(980px 680px at 50% 105%, rgba(16,185,129,.16), transparent 62%),
+        linear-gradient(180deg, var(--bg0), #f1f4ff 55%, #eef6f2 100%);
+    }
+
+    .wrap{
+      max-width:1280px;
+      margin:0 auto;
+      padding:18px 18px 22px;
+      min-height:100vh;
+      display:flex;
+    }
+
+    .card{
+      width:100%;
+      background:rgba(255,255,255,.88);
+      border:1px solid rgba(12,18,34,.10);
+      border-radius:var(--r2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+
+      min-height: calc(100vh - 40px);
+      display:flex;
+      flex-direction:column;
+    }
+
+    header{
+      padding:18px 18px 12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .kicker{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-family:var(--mono);
+      font-size:12px;
+      color:rgba(12,18,34,.62);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border:1px solid rgba(12,18,34,.12);
+      background:rgba(255,255,255,.80);
+      backdrop-filter: blur(10px);
+      border-radius:999px;
+      box-shadow: 0 10px 30px rgba(12,18,34,.06);
+      white-space:nowrap;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(22px, 2.6vw, 34px);
+      line-height:1.08;
+      letter-spacing:-.02em;
+    }
+
+    .sub{
+      margin:10px 0 0;
+      color:rgba(12,18,34,.74);
+      font-size:15px;
+      line-height:1.45;
+      max-width:78ch;
+    }
+
+    .badge{
+      margin:0 18px 14px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(12,18,34,.10);
+      background:rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+      font-size:13px;
+      color:rgba(12,18,34,.78);
+    }
+    .badge code{
+      font-family:var(--mono);
+      font-size:12px;
+      padding:3px 8px;
+      border-radius:999px;
+      background:rgba(12,18,34,.06);
+      border:1px solid rgba(12,18,34,.10);
+      color:rgba(12,18,34,.78);
+    }
+
+    .main{
+      flex:1;
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:16px;
+      padding:0 18px 16px;
+      align-items:stretch;
+      min-height:0;
+    }
+
+    @media (max-width: 980px){
+      .main{ grid-template-columns: 1fr; }
+    }
+
+    .svgWrap{
+      position:relative;
+      border:1px solid rgba(12,18,34,.10);
+      border-radius:var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.72));
+      overflow:hidden;
+
+      height:100%;
+      min-height:520px;
+    }
+
+    .svgWrap:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(560px 260px at 14% 10%, rgba(110,86,207,.18), transparent 62%),
+        radial-gradient(560px 260px at 86% 10%, rgba(88,101,242,.16), transparent 62%),
+        radial-gradient(620px 300px at 52% 110%, rgba(16,185,129,.14), transparent 62%);
+      pointer-events:none;
+      filter:saturate(1.05);
+    }
+
+    svg{
+      position:relative;
+      z-index:1;
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+    .legend{
+      height:100%;
+      min-height:520px;
+      padding:14px 14px 16px;
+      border:1px solid rgba(12,18,34,.10);
+      border-radius:var(--r);
+      background:rgba(255,255,255,.76);
+      overflow:auto;
+    }
+
+    .legend h2{
+      margin:0 0 10px;
+      font-size:14px;
+      letter-spacing:-.01em;
+    }
+
+    .row{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:9px 8px;
+      border-radius:14px;
+      border:1px solid rgba(12,18,34,.08);
+      background:rgba(255,255,255,.82);
+      margin-bottom:10px;
+    }
+    .row:last-child{ margin-bottom:0; }
+
+    .dot{
+      width:12px; height:12px;
+      border-radius:999px;
+      margin-top:3px;
+      box-shadow: 0 8px 20px rgba(12,18,34,.10);
+      flex:0 0 auto;
+    }
+
+    .label{
+      font-weight:900;
+      font-size:13px;
+      margin-bottom:2px;
+    }
+    .desc{
+      margin:0;
+      color:rgba(12,18,34,.72);
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    .rules{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px dashed rgba(12,18,34,.18);
+      background:rgba(245,247,255,.84);
+    }
+    .rules .lead{
+      font-family:var(--mono);
+      font-size:12px;
+      color:rgba(12,18,34,.68);
+      margin:0 0 6px;
+      letter-spacing:.03em;
+    }
+    .rules .big{
+      margin:0;
+      font-weight:900;
+      letter-spacing:-.01em;
+      line-height:1.25;
+    }
+
+    footer{
+      padding:12px 18px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color:rgba(12,18,34,.58);
+      font-size:12px;
+      border-top:1px solid rgba(12,18,34,.08);
+      background:rgba(255,255,255,.72);
+    }
+    footer .sig{ font-family:var(--mono); letter-spacing:.04em; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div>
+          <div class="kicker">
+            <span class="pill">OXXYMORE • OPS</span>
+            <span class="pill">Schéma canonique</span>
+            <span class="pill">Écran contenu</span>
+          </div>
+          <h1>Cycle de travail — Notion → HacknPlan → Unity → GitHub → Discord → Décision</h1>
+          <p class="sub">
+            Un diagramme visuel, pensé pour être compris en 15 secondes.
+            <strong>Unity</strong> = atelier. <strong>GitHub</strong> = preuve. Le reste supporte le flux.
+          </p>
+        </div>
+
+        <div class="pill" aria-label="Règle">
+          <span style="width:10px;height:10px;border-radius:999px;background:rgba(12,18,34,.7)"></span>
+          <span style="font-family:var(--mono);font-size:12px;color:rgba(12,18,34,.72)">1 outil = 1 fonction</span>
+        </div>
+      </header>
+
+      <div class="badge">
+        <span>Lecture recommandée :</span>
+        <code>Comprendre</code><span>→</span><code>Affecter</code><span>→</span><code>Produire</code>
+        <span>→</span><code>Prouver</code><span>→</span><code>Signaler</code><span>→</span><code>Décider</code>
+      </div>
+
+      <div class="main">
+        <section class="svgWrap" aria-label="Schéma visuel illustré">
+          <svg viewBox="0 0 1180 680" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Schéma Oxxymore des outils (écran contenu)">
+            <defs>
+              <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(12,18,34,.20)"/>
+              </filter>
+
+              <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="rgba(255,255,255,.97)"/>
+                <stop offset="1" stop-color="rgba(255,255,255,.72)"/>
+              </linearGradient>
+
+              <linearGradient id="arrowGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="rgba(12,18,34,.14)"/>
+                <stop offset="1" stop-color="rgba(12,18,34,.34)"/>
+              </linearGradient>
+
+              <marker id="arrowHead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                <path d="M0,0 L12,6 L0,12 Z" fill="rgba(12,18,34,.44)"></path>
+              </marker>
+
+              <style>
+                .node { filter:url(#softShadow); }
+                .box {
+                  fill:url(#gloss);
+                  stroke: rgba(12,18,34,.14);
+                  stroke-width: 1.2;
+                  rx: 22;
+                }
+                .title { font: 900 18px/1.1 ui-sans-serif, system-ui; fill: rgba(12,18,34,.92); letter-spacing:-.01em; }
+                .subtitle { font: 650 13px/1.2 ui-sans-serif, system-ui; fill: rgba(12,18,34,.70); }
+                .tag { font: 800 11px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas; fill: rgba(12,18,34,.70); letter-spacing:.02em; }
+                .mini { font: 650 12px/1.2 ui-sans-serif, system-ui; fill: rgba(12,18,34,.66); }
+                .wire {
+                  stroke: url(#arrowGrad);
+                  stroke-width: 2.6;
+                  fill: none;
+                  marker-end: url(#arrowHead);
+                  opacity:.95;
+                }
+                .rail {
+                  stroke: rgba(12,18,34,.08);
+                  stroke-width: 12;
+                  fill: none;
+                  opacity:.55;
+                  stroke-linecap: round;
+                }
+              </style>
+            </defs>
+
+            <path class="rail" d="M180 140 C 310 55, 450 55, 580 140 S 850 235, 980 140"></path>
+            <path class="rail" d="M980 140 C 1085 250, 1085 430, 980 540 S 705 655, 575 565"></path>
+            <path class="rail" d="M575 565 C 430 480, 290 480, 170 565"></path>
+            <path class="rail" d="M170 565 C 85 505, 85 255, 170 205"></path>
+
+            <path class="wire" d="M260 140 C 345 70, 435 70, 520 140"></path>
+            <path class="wire" d="M660 140 C 745 70, 835 70, 920 140"></path>
+            <path class="wire" d="M980 215 C 1050 295, 1050 385, 980 465"></path>
+            <path class="wire" d="M880 565 C 790 645, 710 645, 620 565"></path>
+            <path class="wire" d="M520 565 C 430 645, 345 645, 255 565"></path>
+            <path class="wire" d="M170 485 C 120 395, 120 305, 170 225"></path>
+
+            <g class="node" transform="translate(70,90)">
+              <rect class="box" width="210" height="120"></rect>
+              <circle cx="30" cy="30" r="11" fill="var(--c-notion)"></circle>
+              <text x="52" y="36" class="tag">COMPRENDRE</text>
+              <text x="20" y="72" class="title">NOTION</text>
+              <text x="20" y="96" class="subtitle">Règles • process • repères</text>
+              <g transform="translate(156,26)">
+                <rect x="0" y="0" width="40" height="54" rx="10" fill="rgba(110,86,207,.12)" stroke="rgba(110,86,207,.28)"/>
+                <path d="M10 16 H30" stroke="rgba(110,86,207,.78)" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M10 28 H30" stroke="rgba(110,86,207,.56)" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M10 40 H26" stroke="rgba(110,86,207,.46)" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <g class="node" transform="translate(465,90)">
+              <rect class="box" width="250" height="120"></rect>
+              <circle cx="30" cy="30" r="11" fill="var(--c-hack)"></circle>
+              <text x="52" y="36" class="tag">AFFECTER</text>
+              <text x="20" y="72" class="title">HACKNPLAN</text>
+              <text x="20" y="96" class="subtitle">Tâches • priorités • suivi</text>
+              <g transform="translate(192,30)">
+                <rect x="0" y="0" width="48" height="48" rx="12" fill="rgba(255,122,0,.12)" stroke="rgba(255,122,0,.30)"/>
+                <path d="M14 18 H34" stroke="rgba(255,122,0,.82)" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M14 26 H34" stroke="rgba(255,122,0,.56)" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M14 34 H26" stroke="rgba(255,122,0,.46)" stroke-width="2.6" stroke-linecap="round"/>
+                <circle cx="12" cy="18" r="2.2" fill="rgba(255,122,0,.82)"/>
+                <circle cx="12" cy="26" r="2.2" fill="rgba(255,122,0,.56)"/>
+                <circle cx="12" cy="34" r="2.2" fill="rgba(255,122,0,.46)"/>
+              </g>
+            </g>
+
+            <g class="node" transform="translate(875,90)">
+              <rect class="box" width="235" height="120"></rect>
+              <circle cx="30" cy="30" r="11" fill="var(--c-unity)"></circle>
+              <text x="52" y="36" class="tag">PRODUIRE</text>
+              <text x="20" y="72" class="title">UNITY</text>
+              <text x="20" y="96" class="subtitle">Dev local • scènes • tests</text>
+              <g transform="translate(176,32)">
+                <polygon points="26,0 48,12 48,36 26,48 4,36 4,12"
+                  fill="rgba(17,24,39,.08)" stroke="rgba(17,24,39,.30)"/>
+                <path d="M26 10 L38 17 L38 31 L26 38 L14 31 L14 17 Z"
+                  fill="rgba(17,24,39,.12)" stroke="rgba(17,24,39,.28)"/>
+                <circle cx="26" cy="24" r="3.4" fill="rgba(17,24,39,.70)"/>
+              </g>
+            </g>
+
+            <g class="node" transform="translate(850,480)">
+              <rect class="box" width="285" height="135"></rect>
+              <circle cx="30" cy="30" r="11" fill="var(--c-github)"></circle>
+              <text x="52" y="36" class="tag">PROUVER</text>
+              <text x="20" y="74" class="title">GITHUB</text>
+              <text x="20" y="98" class="subtitle">Commits • PR • Issues</text>
+              <text x="20" y="120" class="mini">“Pas sur GitHub = invisible”</text>
+              <g transform="translate(222,34)">
+                <rect x="0" y="0" width="52" height="52" rx="14" fill="rgba(11,18,36,.06)" stroke="rgba(11,18,36,.22)"/>
+                <path d="M16 18 C21 12, 31 12, 36 18 C41 24, 41 34, 36 40 C31 46, 21 46, 16 40 C11 34, 11 24, 16 18 Z"
+                      fill="rgba(11,18,36,.12)" stroke="rgba(11,18,36,.28)"/>
+                <path d="M20 34 L32 34" stroke="rgba(11,18,36,.58)" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <g class="node" transform="translate(455,505)">
+              <rect class="box" width="320" height="135"></rect>
+              <circle cx="30" cy="30" r="11" fill="var(--c-discord)"></circle>
+              <text x="52" y="36" class="tag">SIGNALER</text>
+              <text x="20" y="74" class="title">DISCORD</text>
+              <text x="20" y="98" class="subtitle">Daily • coordination légère</text>
+              <text x="20" y="120" class="mini">Toujours avec lien GitHub</text>
+              <g transform="translate(258,38)">
+                <rect x="0" y="0" width="52" height="52" rx="16" fill="rgba(88,101,242,.10)" stroke="rgba(88,101,242,.28)"/>
+                <path d="M14 32 C15 24, 21 18, 26 18 C31 18, 37 24, 38 32"
+                      fill="none" stroke="rgba(88,101,242,.78)" stroke-width="2.6" stroke-linecap="round"/>
+                <circle cx="21" cy="30" r="2.4" fill="rgba(88,101,242,.78)"/>
+                <circle cx="31" cy="30" r="2.4" fill="rgba(88,101,242,.78)"/>
+              </g>
+            </g>
+
+            <g class="node" transform="translate(55,480)">
+              <rect class="box" width="330" height="135"></rect>
+              <circle cx="30" cy="30" r="11" fill="var(--c-decision)"></circle>
+              <text x="52" y="36" class="tag">DÉCIDER</text>
+              <text x="20" y="74" class="title">DÉCISION</text>
+              <text x="20" y="98" class="subtitle">Sans réunion • sur preuve</text>
+              <text x="20" y="120" class="mini">GO / NO-GO sur éléments vérifiables</text>
+              <g transform="translate(260,38)">
+                <rect x="0" y="0" width="54" height="54" rx="18" fill="rgba(16,185,129,.10)" stroke="rgba(16,185,129,.30)"/>
+                <path d="M16 30 L24 38 L40 18" fill="none" stroke="rgba(16,185,129,.86)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </g>
+
+            <g opacity=".96">
+              <rect x="290" y="265" width="600" height="52" rx="16"
+                    fill="rgba(255,255,255,.74)" stroke="rgba(12,18,34,.10)"/>
+              <text x="315" y="297" class="mini">
+                Règle : une tâche HacknPlan ⇢ une Issue GitHub (même sujet, même preuve)
+              </text>
+            </g>
+
+            <g opacity=".96">
+              <rect x="260" y="330" width="660" height="52" rx="16"
+                    fill="rgba(255,255,255,.74)" stroke="rgba(12,18,34,.10)"/>
+              <text x="285" y="362" class="mini">
+                Unity produit localement ⇢ GitHub versionne ⇢ Discord signale (jamais l’inverse)
+              </text>
+            </g>
+          </svg>
+        </section>
+
+        <aside class="legend" aria-label="Lecture rapide">
+          <h2>Lecture rapide</h2>
+
+          <div class="row">
+            <span class="dot" style="background:var(--c-notion)"></span>
+            <div>
+              <div class="label">Notion = compréhension</div>
+              <p class="desc">Règles, process, repères. On lit. On ne “livre” rien ici.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <span class="dot" style="background:var(--c-hack)"></span>
+            <div>
+              <div class="label">HacknPlan = affectation</div>
+              <p class="desc">Les tâches sont assignées et priorisées. Chaque tâche doit être traçable sur GitHub.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <span class="dot" style="background:var(--c-unity)"></span>
+            <div>
+              <div class="label">Unity = production</div>
+              <p class="desc">On développe localement. Unity seul n’est pas une preuve.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <span class="dot" style="background:var(--c-github)"></span>
+            <div>
+              <div class="label">GitHub = preuve</div>
+              <p class="desc">Commits/PR/Issues. Sans GitHub, le travail est invisible.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <span class="dot" style="background:var(--c-discord)"></span>
+            <div>
+              <div class="label">Discord = signal</div>
+              <p class="desc">Daily + coordination courte. Toujours avec lien GitHub. Jamais de livrables.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <span class="dot" style="background:var(--c-decision)"></span>
+            <div>
+              <div class="label">Décision = sans réunion</div>
+              <p class="desc">GO/NO-GO basé sur preuves et éléments vérifiables.</p>
+            </div>
+          </div>
+
+          <div class="rules">
+            <p class="lead">Règle non négociable</p>
+            <p class="big">OXXYMORE ne juge jamais le temps.<br/>OXXYMORE juge uniquement la preuve.</p>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        <div class="sig">© OXXYMORE INTERACTIVE — Ops & Governance</div>
+        <div class="sig">oxxymore interactive</div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
